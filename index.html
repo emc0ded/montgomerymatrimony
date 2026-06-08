@@ -7,44 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" type="image/png" href="assets/locket.png" />
-  <link rel="preload" as="image" href="assets/background.png" />
 </head>
 <body>
 
-<!-- ======================================================
-     PASSWORD GATE
-====================================================== -->
-<div id="password-gate" style="
-  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999;
-  background: url('assets/background.png') center center / cover no-repeat #FFF8EE;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  font-family: 'Crimson Pro', serif;
-  opacity: 0; transition: opacity 0.6s ease;
-">
-  <div style="
-    background: rgba(255,248,238,0.88);
-    padding: 52px 48px; text-align: center;
-    max-width: 420px; width: 90%;
-    border: 1px solid #DFB3B7;
-  ">
-    <p style="font-family:'Pinyon Script',cursive; font-size:3rem; color:#C18987; margin-bottom:8px;">Emily &amp; Brady</p>
-    <p style="font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase; color:#C18987; margin-bottom:32px;">August 1, 2026</p>
-    <p style="font-style:italic; color:#7a6050; margin-bottom:24px; line-height:1.7;">Please enter the password.</p>
-    <input id="pw-input" type="password" placeholder="Password" style="
-      width:100%; padding:12px 16px; margin-bottom:12px;
-      border:1px solid #DFB3B7; background:#fffdf8;
-      font-family:'Crimson Pro',serif; font-size:1rem; color:#4a3728;
-      outline:none; box-sizing:border-box;
-    " />
-    <p id="pw-error" style="color:#a06060; font-style:italic; font-size:0.9rem; min-height:1.2em; margin-bottom:12px;"></p>
-    <button onclick="checkPassword()" style="
-      width:100%; padding:14px; background:#C18987; color:#FFF8EE;
-      border:none; font-family:'Crimson Pro',serif; font-size:0.8rem;
-      letter-spacing:0.3em; text-transform:uppercase; cursor:pointer;
-    ">Enter</button>
-  </div>
-</div>
 
 <!-- ======================================================
      NAVBAR
@@ -675,45 +640,6 @@
     }
   }
 
-  // ----------------------------------------------------------------
-  //  PASSWORD GATE
-  // ----------------------------------------------------------------
-  (function () {
-    const gate = document.getElementById('password-gate');
-    if (sessionStorage.getItem('mm_auth') === '1') {
-      gate.style.display = 'none';
-      return;
-    }
-    // Lock body scroll while gate is showing
-    document.body.style.overflow = 'hidden';
-    // Wait for background image to load before fading in
-    const bg = new Image();
-    bg.src = 'assets/background.png';
-    const showGate = () => { gate.style.opacity = '1'; };
-    if (bg.complete) {
-      showGate();
-    } else {
-      bg.onload = showGate;
-      bg.onerror = showGate; // show anyway if image fails
-    }
-    // Allow pressing Enter to submit
-    document.getElementById('pw-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') checkPassword();
-    });
-  }());
-
-  function checkPassword() {
-    const val = document.getElementById('pw-input').value.trim().toLowerCase();
-    if (val === 'montgomerymatrimony') {
-      sessionStorage.setItem('mm_auth', '1');
-      document.getElementById('password-gate').style.display = 'none';
-      document.body.style.overflow = '';
-    } else {
-      document.getElementById('pw-error').textContent = 'Incorrect password — try again!';
-      document.getElementById('pw-input').value = '';
-      document.getElementById('pw-input').focus();
-    }
-  }
 </script>
 </body>
 </html>

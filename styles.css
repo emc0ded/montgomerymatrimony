@@ -1,9 +1,3 @@
-/* ===================== PASSWORD GATE ===================== */
-@keyframes gateIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 /* ===================== RESET & VARIABLES ===================== */
 :root {
   --rose:  #C18987;
